@@ -1,6 +1,6 @@
 export default {
   'pages.layouts.userLayout.title':
-    'Hệ thống quản lý mỳ cày Madam Lân!',
+    'Hệ thống quản lý mỳ cay Madam Lân!',
   'pages.login.accountLogin.tab': 'Account Login',
   'pages.login.accountLogin.errorMessage': 'Thông tin username/password không hợp lệ',
   'pages.login.failure': 'Đăng nhập thất bại, vui lòng thử lại!',

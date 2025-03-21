@@ -5,6 +5,7 @@ import defaultSettings from './defaultSettings';
 import proxy from './proxy';
 
 import routes from './routes';
+import { env } from 'process';
 
 const { REACT_APP_ENV = 'dev' } = process.env;
 
@@ -77,7 +78,7 @@ export default defineConfig({
    * @name layout 插件
    * @doc https://umijs.org/docs/max/layout-menu
    */
-  title: 'Ant Design Pro',
+  title: 'Madams Lân',
   layout: {
     locale: true,
     ...defaultSettings,
@@ -159,6 +160,7 @@ export default defineConfig({
   esbuildMinifyIIFE: true,
   requestRecord: {},
   define: {
-    PAGE_SIZE:20
+    PAGE_SIZE:20,
+    ODS_API_URL: env['ODS_API_URL'],
   }
 });

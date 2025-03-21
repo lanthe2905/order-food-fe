@@ -20,3 +20,4 @@ declare const PAGE_SIZE: 10 | 20 | 50 | 100
 
 
 declare const REACT_APP_ENV: 'test' | 'dev' | 'pre' | false;
+declare const ODS_API_URL: string;
