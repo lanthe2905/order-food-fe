@@ -12,6 +12,7 @@ import { Button, Input, message, Upload } from 'antd';
 import React from 'react';
 import { queryCity, queryCurrent, queryProvince } from '../service';
 import useStyles from './index.style';
+import { fetchCurrentUser } from '@/services/ant-design-pro/api';
 
 const validatorPhone = (rule: any, value: string[], callback: (message?: string) => void) => {
   if (!value[0]) {
@@ -43,7 +44,7 @@ const BaseView: React.FC = () => {
     </>
   );
   const { data: currentUser, loading } = useRequest(() => {
-    return queryCurrent();
+    return fetchCurrentUser();
   });
   const getAvatarURL = () => {
     if (currentUser) {

@@ -1,6 +1,7 @@
 ﻿import type { RequestOptions } from '@@/plugin-request/request';
 import type { RequestConfig } from '@umijs/max';
 import { message, notification } from 'antd';
+import { getToken } from './services/auth';
 
 // 错误处理方案： 错误类型
 enum ErrorShowType {
@@ -26,6 +27,10 @@ interface ResponseStructure {
  */
 export const errorConfig: RequestConfig = {
   // 错误处理： umi@3 的错误处理方案。
+  headers: {
+    'Content-Type': 'application/json',
+    Authorization: `Bearer ${getToken()}`,
+  },
   errorConfig: {
     // 错误抛出
     errorThrower: (res) => {

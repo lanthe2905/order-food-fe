@@ -1,5 +1,7 @@
 import { Footer } from '@/components';
 import { getFakeCaptcha } from '@/services/ant-design-pro/login';
+import { getToken, setToken } from '@/services/auth';
+import { handleApiError } from '@/utils/handleError';
 import {
   AlipayCircleOutlined,
   LockOutlined,
@@ -12,7 +14,7 @@ import { LoginForm, ProFormCaptcha, ProFormText } from '@ant-design/pro-componen
 import { FormattedMessage, Helmet, SelectLang, useIntl, useModel } from '@umijs/max';
 import { Alert, message, Tabs } from 'antd';
 import { createStyles } from 'antd-style';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { flushSync } from 'react-dom';
 import Settings from '../../../../config/defaultSettings';
 import { login } from '../service/auth';
@@ -111,19 +113,39 @@ const Login: React.FC = () => {
 
   const handleSubmit = async (values: API.LoginParams) => {
     try {
-      await login({ ...values });
-      await fetchUserInfo();
-      const urlParams = new URL(window.location.href).searchParams;
-      window.location.href = urlParams.get('redirect') || '/';
+      const data = await login({ ...values, type });
+      const token = data.data;
+      if (token?.token) {
+        message.success(
+          intl.formatMessage({
+            id: 'pages.login.success',
+          }),
+        );
+        setToken(token.token?.token);
+        await fetchUserInfo();
+        const urlParams = new URL(window.location.href).searchParams;
+        window.location.href = urlParams.get('redirect') || '/';
+        return;
+      }
     } catch (error) {
-      const defaultLoginFailureMessage = intl.formatMessage({
-        id: 'pages.login.failure',
-      });
-      console.log(error);
-      message.error(defaultLoginFailureMessage);
+      handleApiError(error, null, null);
     }
   };
   const { status, type: loginType } = userLoginState;
+  useEffect(() => {
+    const process = async () => {
+      try {
+        let redirectHomePage = false;
+        const token = getToken();
+        if (token && initialState?.currentUser) {
+          redirectHomePage = true;
+        }
+
+        redirectHomePage ? (window.location.href = '/') : null;
+      } catch (error) {}
+    };
+    process();
+  }, []);
 
   return (
     <div className={styles.container}>
