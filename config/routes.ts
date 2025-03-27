@@ -76,7 +76,13 @@ export default [
     path: '/employee',
     name: 'employee',
     icon: 'user',
-    routes: [],
+    routes: [
+      {
+        path: "",
+        name: 'employee',
+        component: './employee/',
+      }
+    ],
   },
   {
     path: '/profile',

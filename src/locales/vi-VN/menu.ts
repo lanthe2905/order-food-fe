@@ -49,4 +49,8 @@ export default {
   'menu.editor.flow': 'Flow Editor',
   'menu.editor.mind': 'Mind Editor',
   'menu.editor.koni': 'Koni Editor',
+
+  // Custom menu items
+  'menu.employee': 'Employee',
+  'menu.employee.list': 'Employee List',
 };
