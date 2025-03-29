@@ -70,11 +70,21 @@ declare namespace API {
     data: Array<any>;
   };
 
-  type RuleList = {
-    data?: RuleListItem[];
-    /** 列表的内容总数 */
-    total?: number;
-    success?: boolean;
+  type RuleList<T> = {
+    data: T[];
+    message?: string;
+    status: number | string;
+    meta: {
+      total: number;
+      per_page: number;
+      current_page: number;
+      last_page: number;
+      first_page: number;
+      first_page_url: string;
+      last_page_url: string;
+      next_page_url: string;
+      previous_page_url: string;
+    };
   };
 
   type FakeCaptcha = {

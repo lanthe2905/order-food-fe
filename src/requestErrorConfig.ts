@@ -2,6 +2,7 @@
 import type { RequestConfig } from '@umijs/max';
 import { message, notification } from 'antd';
 import { getToken } from './services/auth';
+import { deepClone } from './utils/common';
 
 // 错误处理方案： 错误类型
 enum ErrorShowType {
@@ -34,8 +35,7 @@ export const errorConfig: RequestConfig = {
   errorConfig: {
     // 错误抛出
     errorThrower: (res) => {
-      const { success, data, errorCode, errorMessage, showType } =
-        res as unknown as ResponseStructure;
+      const { success, data, errorCode, errorMessage, showType } = res as unknown as ResponseStructure;
       if (!success) {
         const error: any = new Error(errorMessage);
         error.name = 'BizError';
@@ -94,8 +94,23 @@ export const errorConfig: RequestConfig = {
   requestInterceptors: [
     (config: RequestOptions) => {
       // 拦截请求配置，进行个性化处理。
-      const url = config?.url?.concat('?token = 123');
-      return { ...config, url };
+      const { params } = config;
+      const removeKeys = ['pageSize', 'current'];
+      const customParams = deepClone(params) || {};
+      
+      if(!!params?.pageSize && !!params?.current) {
+        customParams.per_page = customParams?.pageSize;
+        customParams.page = customParams?.current;
+  
+        Object.keys(customParams).forEach((key: string) => {
+          if (removeKeys.includes(key)) {
+            delete customParams[key];
+          }
+        });
+
+      }
+
+      return { ...config, params: customParams };
     },
   ],
 

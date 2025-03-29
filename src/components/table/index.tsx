@@ -1,7 +1,9 @@
 import { ActionType, ProTable as AntProTable, ParamsType, ProTableProps } from '@ant-design/pro-components'
 import React, { useRef, useState } from 'react'
 
-export const ProTable = <T extends Record<string, any>, Params extends ParamsType = ParamsType, ValueType = "text">(props: ProTableProps<any, {}>) => {
+const ProTable = <Type extends Record<string, any>, Params extends ParamsType = ParamsType, ValueType = "text">(
+  props: ProTableProps<Type, Params>
+): React.ReactNode => {
   const [currentPage, setCurrentPage] = useState(1)
   const [pageSize, setPageSize] = useState(PAGE_SIZE)
   // @ts-ignore
@@ -16,7 +18,8 @@ export const ProTable = <T extends Record<string, any>, Params extends ParamsTyp
   })
 
   return (
-    <AntProTable
+    <AntProTable<Type>
+      rowKey={props.rowKey as keyof Type}
       search={{
         // Căn label không bị đè lên input
         labelWidth: 'auto',
@@ -64,3 +67,5 @@ export const ProTable = <T extends Record<string, any>, Params extends ParamsTyp
     />
   )
 }
+
+export default ProTable

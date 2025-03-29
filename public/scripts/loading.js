@@ -191,10 +191,10 @@
           </div>
         </div>
         <div class="loading-title">
-          正在加载资源
+          Đang tải chuỗi cửa hàng
         </div>
         <div class="loading-sub-title">
-          初次加载资源可能需要较多时间 请耐心等待
+          Chuỗi cửa hàng đang được tải lên, vui lòng đợi trong giây lát
         </div>
       </div>
     `;

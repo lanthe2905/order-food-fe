@@ -1,14 +1,22 @@
-import ResizableDrawer from "@/components/Drawer/ResizableDrawer"
-
+import React, { useState } from 'react';
+import { PageContext } from './context';
+import List from './List';
 
 export default () => {
-    return (
-        <>
-            <div>
-                <h1>Employee Page</h1>
-                <p>This is the employee page.</p>
-            </div>
-            <ResizableDrawer/>
-        </>
-    )
-}
+  const [openDrawer, setOpenDrawer] = useState(false);
+  const [selectedEmployee, setSelectedEmployee] = useState(null);
+  return (
+    <React.Fragment>
+      <PageContext.Provider
+        value={{
+          openDrawer,
+          setOpenDrawer,
+          selectedEmployee,
+          setSelectedEmployee,
+        }}
+      >
+        <List />
+      </PageContext.Provider>
+    </React.Fragment>
+  );
+};

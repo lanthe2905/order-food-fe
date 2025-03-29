@@ -78,8 +78,12 @@ export default [
     icon: 'user',
     routes: [
       {
-        path: "",
-        name: 'employee',
+        path: "/employee",
+        redirect: "/employee/list",
+      },
+      {
+        path: "list",
+        name: 'list',
         component: './employee/',
       }
     ],
