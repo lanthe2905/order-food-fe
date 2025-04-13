@@ -1,5 +1,5 @@
 import { Modal } from 'antd'
-import { constant } from '@/utils/helper'
+import { constant } from '@/utils/constant'
 import { waitTime } from '@/hooks/waiTime'
 /*
  * @param {err}
@@ -7,16 +7,16 @@ import { waitTime } from '@/hooks/waiTime'
  * @param navigate là state của react-router-dom để chuyển hướng trang
  */
 
-const handleApiError = (err: any, formRef: any, navigate: any) => {
-  console.log(err)
+const handleApiError = (err: any, formRef: any) => {
   switch (err?.code) {
     case 'INVALID_TOKEN':
-      navigate('/login', { replace: true })
+      window.location.href = '/login'
+
       break
 
-    case 'VALIDATION_FAILURE':
+    case 'E_VALIDATION_ERROR':
       // Xử lý lỗi validate của antd
-      err.errors.forEach((validation: any) => {
+      err.messages.forEach((validation: any) => {
         const [prefixField, index, field, ...child] = validation.field.split('.')
 
         // Case xử lý dạng mãng

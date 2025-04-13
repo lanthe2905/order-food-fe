@@ -7,8 +7,25 @@ import { history, Link } from '@umijs/max';
 import defaultSettings from '../config/defaultSettings';
 import { errorConfig } from './requestErrorConfig';
 import { fetchCurrentUser } from './services/ant-design-pro/api';
+import TableToExcel from '@linways/table-to-excel'
+
 const isDev = process.env.NODE_ENV === 'development';
 const loginPath = '/user/login';
+
+TableToExcel.convertToExcel = async (table) => {
+  let defaultOpts = {
+    name: 'export.xlsx',
+    autoStyle: false,
+    sheet: {
+      name: 'Sheet 1',
+    },
+  }
+  let wb = TableToExcel.tableToBook(table, defaultOpts)
+
+  const buffer = await wb.xlsx.writeBuffer()
+  return new Blob([buffer], { type: 'application/octet-stream' })
+}
+
 
 /**
  * @see  https://umijs.org/zh-CN/plugins/plugin-initial-state

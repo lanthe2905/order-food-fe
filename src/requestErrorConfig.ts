@@ -78,6 +78,7 @@ export const errorConfig: RequestConfig = {
         // Axios 的错误
         // 请求成功发出且服务器也响应了状态码，但状态代码超出了 2xx 的范围
         message.error(`Response status:${error.response.status}`);
+        throw error.response.data;
       } else if (error.request) {
         // 请求已经成功发起，但没有收到响应
         // \`error.request\` 在浏览器中是 XMLHttpRequest 的实例，
@@ -97,17 +98,16 @@ export const errorConfig: RequestConfig = {
       const { params } = config;
       const removeKeys = ['pageSize', 'current'];
       const customParams = deepClone(params) || {};
-      
-      if(!!params?.pageSize && !!params?.current) {
+
+      if (!!params?.pageSize && !!params?.current) {
         customParams.per_page = customParams?.pageSize;
         customParams.page = customParams?.current;
-  
+
         Object.keys(customParams).forEach((key: string) => {
           if (removeKeys.includes(key)) {
             delete customParams[key];
           }
         });
-
       }
 
       return { ...config, params: customParams };

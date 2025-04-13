@@ -78,13 +78,9 @@ export default [
     icon: 'user',
     routes: [
       {
-        path: "/employee",
-        redirect: "/employee/list",
-      },
-      {
         path: "list",
         name: 'list',
-        component: './employee/',
+        component: '@/pages/employee/List.tsx',
       }
     ],
   },
