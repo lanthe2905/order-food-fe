@@ -8,6 +8,7 @@ import defaultSettings from '../config/defaultSettings';
 import { errorConfig } from './requestErrorConfig';
 import { fetchCurrentUser } from './services/ant-design-pro/api';
 import TableToExcel from '@linways/table-to-excel'
+import ErrorBoundary from './components/ErrorBoundary';
 
 const isDev = process.env.NODE_ENV === 'development';
 const loginPath = '/user/login';
@@ -105,6 +106,7 @@ export const layout: RunTimeLayoutConfig = ({ initialState, setInitialState }) =
         width: '331px',
       },
     ],
+    ErrorBoundary: ErrorBoundary,
     links: isDev
       ? [
           <Link key="openapi" to="/umi/plugin/openapi" target="_blank">

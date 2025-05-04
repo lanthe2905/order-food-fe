@@ -52,5 +52,8 @@ export default {
 
   // Custom menu items
   'menu.employee': 'Employee',
-  'menu.employee.list': 'Employee List',
+  'menu.employee.list': 'Danh sách nhân viên',
+  'menu.employee.salary-info': 'Thông tin tính lương',
+  'menu.employee.workshift': "Ca làm việc",
+  'menu.employee.workshift-process': "Quá trình làm việc",
 };

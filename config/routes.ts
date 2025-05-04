@@ -81,6 +81,21 @@ export default [
         path: "list",
         name: 'list',
         component: '@/pages/employee/List.tsx',
+      },
+      {
+        path: "salary-info",
+        name: 'salary-info',
+        component: '@/pages/salary-info/index.tsx',
+      },
+      {
+        path: "workshift",
+        name: 'workshift',
+        component: '@/pages/employee/List.tsx',
+      },
+      {
+        path: "workshift-process",
+        name: 'workshift-process',
+        component: '@/pages/workshift-process/index.tsx',
       }
     ],
   },
