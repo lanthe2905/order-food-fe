@@ -1,0 +1,44 @@
+---
+description:
+globs:
+alwaysApply: false
+---
+# Landing Page Guide
+
+## Overview
+The landing page section is built using UmiJS and Ant Design components. It focuses on marketing and user engagement.
+
+## Key Features
+- Hero Section
+- Feature Showcase
+- Contact Form
+- Testimonials
+
+## Directory Structure
+- `src/pages/landing/` - Landing pages
+  - `index.tsx` - Home page
+  - `about/` - About page
+  - `contact/` - Contact page
+
+## Components
+- Use Ant Design components
+- Custom components in `components/landing/`
+- Layout components in `components/layout/LandingLayout/`
+
+## Data Management
+- Use React hooks for simple state
+- API calls in `services/landing.ts`
+- Use `useRequest` hook for data fetching
+
+## Performance
+- Optimize images and assets
+- Use lazy loading for components
+- Implement proper caching
+
+## Best Practices
+1. Focus on user experience
+2. Optimize for performance
+3. Make it mobile responsive
+4. Use TypeScript for type safety
+5. Keep components modular
+

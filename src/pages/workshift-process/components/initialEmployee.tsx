@@ -1,11 +1,9 @@
-import { PlusOutlined } from '@ant-design/icons';
-import { FormListActionType } from '@ant-design/pro-components';
-import { Button, Card, Col, Row, Space } from 'antd';
-import React, { useEffect, useRef, useState } from 'react';
+import { DataType } from '@antv/l7';
+import { Avatar, Button, Card, Checkbox, Col, Divider, List, Row, Skeleton, Space } from 'antd';
+import React, { useEffect, useState } from 'react';
+import InfiniteScroll from 'react-infinite-scroll-component';
 
 const InitialEmployee = () => {
-
-
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState<DataType[]>([]);
   const [page, setPage] = useState(1);
@@ -35,26 +33,6 @@ const InitialEmployee = () => {
   return (
     <React.Fragment>
       <Space>
-        <Button
-          type="primary"
-          onClick={() => {
-            const list = actionRef?.current?.getList();
-            actionRef?.current?.add({
-              name: 'New' + list?.length,
-            });
-          }}
-        >
-          Sao chép từ tháng trước
-        </Button>
-        <Button
-          danger
-          onClick={() => {
-            actionRef?.current?.remove(1);
-          }}
-        >
-          Xoá tất cả
-        </Button>
-
         {/* <Button
           type="dashed"
           onClick={() => {
@@ -77,7 +55,32 @@ const InitialEmployee = () => {
 
       <Row gutter={16} style={{ marginTop: 16 }}>
         <Col span={16}>
-          <Card title="Danh sách nhân viên">
+          <Card
+            title="Danh sách nhân viên"
+            extra={
+              <Space>
+                <Button
+                  type="primary"
+                  onClick={() => {
+                    const list = actionRef?.current?.getList();
+                    actionRef?.current?.add({
+                      name: 'New' + list?.length,
+                    });
+                  }}
+                >
+                  Sao chép từ tháng trước
+                </Button>
+                <Button
+                  danger
+                  onClick={() => {
+                    actionRef?.current?.remove(1);
+                  }}
+                >
+                  Bỏ chọn tất cả
+                </Button>
+              </Space>
+            }
+          >
             <InfiniteScroll
               dataLength={data.length}
               next={loadMoreData}
@@ -95,7 +98,10 @@ const InitialEmployee = () => {
                       title={<a href="https://ant.design">{item.name}</a>}
                       description={item.email}
                     />
-                    <div>Content</div>
+                    <div>
+                      {' '}
+                      <Checkbox value="A"></Checkbox>
+                    </div>
                   </List.Item>
                 )}
               />
@@ -103,7 +109,7 @@ const InitialEmployee = () => {
           </Card>
         </Col>
 
-        <Col span={8}>
+        {/* <Col span={8}>
           <Card title="Thêm nhân viên">
             <Button
               icon={<PlusOutlined />}
@@ -114,7 +120,7 @@ const InitialEmployee = () => {
               Thêm nhân sự mới
             </Button>
           </Card>
-        </Col>
+        </Col> */}
       </Row>
     </React.Fragment>
   );

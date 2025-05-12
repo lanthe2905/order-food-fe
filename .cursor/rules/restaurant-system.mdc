@@ -1,0 +1,110 @@
+---
+description:
+globs:
+alwaysApply: false
+---
+# Restaurant Management System Guide
+
+## System Overview
+This is a comprehensive restaurant management system built with UmiJS that supports multi-chain restaurant operations. The system consists of two main parts: Admin Panel for restaurant management and Customer-facing Landing Page for food ordering.
+
+## Core Features
+
+### Admin Panel
+1. Inventory Management
+   - Track raw materials and supplies
+   - Stock level monitoring
+   - Reorder point alerts
+   - Supplier management
+
+2. Employee Management
+   - Time tracking and attendance
+   - Shift scheduling
+   - Performance monitoring
+   - Payroll integration
+
+3. Financial Management
+   - Daily revenue tracking
+   - Expense management
+   - Profit/loss analysis
+   - Multi-branch financial reports
+
+4. Restaurant Operations
+   - Menu management
+   - Table management
+   - Order tracking
+   - Kitchen display system
+
+### Customer Landing Page
+1. QR Code Ordering System
+   - Table-specific QR codes
+   - Real-time menu display
+   - Direct-to-table ordering
+   - Order status tracking
+
+2. Customer Features
+   - Menu browsing
+   - Online ordering
+   - Order history
+   - Special requests
+
+## Technical Architecture
+
+### Admin Section
+- `src/pages/admin/`
+  - `inventory/` - Inventory management
+  - `employees/` - Employee management
+  - `finance/` - Financial tracking
+  - `operations/` - Restaurant operations
+
+### Customer Section
+- `src/pages/landing/`
+  - `menu/` - Menu display
+  - `order/` - Order processing
+  - `tracking/` - Order tracking
+
+## Data Models
+
+### Core Entities
+1. Restaurant
+   - Basic information
+   - Location details
+   - Operating hours
+   - Contact information
+
+2. Inventory
+   - Item details
+   - Stock levels
+   - Supplier information
+   - Cost tracking
+
+3. Employee
+   - Personal information
+   - Work schedule
+   - Attendance records
+   - Performance metrics
+
+4. Order
+   - Order details
+   - Table information
+   - Payment status
+   - Preparation status
+
+## API Structure
+- `/api/admin/` - Admin endpoints
+- `/api/customer/` - Customer-facing endpoints
+- `/api/restaurant/` - Restaurant management endpoints
+
+## Security Considerations
+1. Role-based access control
+2. Secure payment processing
+3. Data encryption
+4. Regular security audits
+
+## Best Practices
+1. Real-time data synchronization
+2. Responsive design for all devices
+3. Efficient inventory management
+4. Accurate financial reporting
+5. User-friendly interfaces
+

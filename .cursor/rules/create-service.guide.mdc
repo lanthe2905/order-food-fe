@@ -1,0 +1,32 @@
+---
+description:
+globs:
+alwaysApply: false
+---
+# Create service guide
+
+## Overview
+
+When a user requests creating a service to call APIs using `umijs request`, follow these steps:
+
+1. Define a variable named `resource` to represent the API endpoint.
+2. Create a function CRUD methods:
+   - `fetchList`: Used to fetch a list of resources (method: GET).
+   - `fetchById`: Used to fetch details of a resource by its ID (method: GET).
+   - `create`: Used to create a new resource (method: POST).
+   - `update`: Used to update a resource by its ID (method: PUT).
+   - `delete`: Used to delete a resource by its ID (method: DELETE).
+3. Each method must use the `request` function from `umi`.
+4. The code should be concise, easy to understand, and adhere to modern programming standards.
+5. Ensure the service is exported as `export`.
+6. Always using Typescript
+
+## Define model / type
+Allway define type in @src/models/resource.model.ts
+
+## Coding Flow
+
+Create file resource.service.ts in @src/services
+import resource from '@/model/resource.model'
+
+const resource = 'api/v1/resource'

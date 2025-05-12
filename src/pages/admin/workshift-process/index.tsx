@@ -8,7 +8,7 @@ import InitialWorkshiftProcess from './components/initialWorkshiftProcess';
 import Timekeeping from './components/Timekeeping';
 import { WorkshiftProcessContext } from './context';
 
-const workShiftProcess = () => {
+const WorkShiftProcess = () => {
   const [current, setCurrent] = useState(0);
   const [thang, setThang] = useState<dayjs.Dayjs | null>(null);
 
@@ -17,7 +17,7 @@ const workShiftProcess = () => {
   };
 
   return (
-    <WorkshiftProcessContext.Provider value={{ thang: thang }}>
+    <WorkshiftProcessContext.Provider value={{ thang }}>
       <PageContainer key={'pages.workshift-process.title'} title={<FormattedMessage id="pages.workshift-process.title" />}>
         <QueryFilter
           labelWidth={'auto'}
@@ -25,8 +25,14 @@ const workShiftProcess = () => {
             background: '#fff',
             marginBottom: '24px',
           }}
+          onFinish={async (values) => {
+            if (values.month) {
+              setThang(dayjs(values.month));
+            }
+          }}
         >
           <ProFormDatePicker.Month
+            name="month"
             label={'Tháng'}
             fieldProps={{
               format: 'MM/YYYY',
@@ -61,19 +67,10 @@ const workShiftProcess = () => {
             ]}
           />
           {/* Content */}
-          <div>
+          <div style={{ marginTop: 24 }}>
             {current === 0 && <InitialWorkshiftProcess />}
-            {current === 1 && (
-              <div>
-                <InitialEmployee />
-              </div>
-            )}
-            {current === 2 && (
-              <div>
-                <Timekeeping />
-              </div>
-            )}
-
+            {current === 1 && <InitialEmployee />}
+            {current === 2 && <Timekeeping />}
             {current === 3 && <div>Chốt chấm công</div>}
           </div>
         </Card>
@@ -82,4 +79,4 @@ const workShiftProcess = () => {
   );
 };
 
-export default workShiftProcess;
+export default WorkShiftProcess;

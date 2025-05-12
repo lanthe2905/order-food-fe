@@ -80,93 +80,36 @@ export default [
       {
         path: "list",
         name: 'list',
-        component: '@/pages/employee/List.tsx',
+        component: '@/pages/admin/employee/List.tsx',
       },
       {
         path: "salary-info",
         name: 'salary-info',
-        component: '@/pages/salary-info/index.tsx',
+        component: '@/pages/admin/salary-info/index.tsx',
       },
       {
         path: "workshift",
         name: 'workshift',
-        component: '@/pages/employee/List.tsx',
+        component: '@/pages/admin/employee/List.tsx',
       },
       {
         path: "workshift-process",
         name: 'workshift-process',
-        component: '@/pages/workshift-process/index.tsx',
+        component: '@/pages/admin/workshift-process/index.tsx',
       }
     ],
   },
   {
-    path: '/profile',
-    name: 'profile',
-    icon: 'profile',
-    routes: [
-      {
-        path: '/profile',
-        redirect: '/profile/basic',
-      },
-      {
-        name: 'basic',
-        icon: 'smile',
-        path: '/profile/basic',
-        component: './profile/basic',
-      },
-      {
-        name: 'advanced',
-        icon: 'smile',
-        path: '/profile/advanced',
-        component: './profile/advanced',
-      },
-    ],
+    path: '/warehouse',
+    name: 'warehouse',
+    icon: 'inbox',
+    component: '@/pages/admin/warehouse/index.tsx',
   },
   {
-    name: 'result',
-    icon: 'CheckCircleOutlined',
-    path: '/result',
-    routes: [
-      {
-        path: '/result',
-        redirect: '/result/success',
-      },
-      {
-        name: 'success',
-        icon: 'smile',
-        path: '/result/success',
-        component: './result/success',
-      },
-      {
-        name: 'fail',
-        icon: 'smile',
-        path: '/result/fail',
-        component: './result/fail',
-      },
-    ],
-  },
-  {
-    name: 'account',
-    icon: 'user',
-    path: '/account',
-    routes: [
-      {
-        path: '/account',
-        redirect: '/account/center',
-      },
-      {
-        name: 'center',
-        icon: 'smile',
-        path: '/account/center',
-        component: './account/center',
-      },
-      {
-        name: 'settings',
-        icon: 'smile',
-        path: '/account/settings',
-        component: './account/settings',
-      },
-    ],
+    path: '/ingredients',
+    name: 'ingredients',
+    icon: 'shopping',
+    component: '@/pages/admin/ingredients/index.tsx',
   },
   {
     path: '/',

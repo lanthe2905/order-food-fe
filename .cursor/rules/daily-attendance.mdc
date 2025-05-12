@@ -1,0 +1,239 @@
+---
+description:
+globs:
+alwaysApply: false
+---
+# Daily Attendance Tracking Guide
+
+## Overview
+This guide provides implementation details for daily attendance tracking using FullCalendar with custom event rendering and status indicators.
+
+## Implementation
+
+### 1. Basic Calendar Setup
+```typescript
+// src/pages/admin/employees/attendance/DailyAttendance.tsx
+import React, { useState, useEffect } from 'react';
+import FullCalendar from '@fullcalendar/react';
+import dayGridPlugin from '@fullcalendar/daygrid';
+import interactionPlugin from '@fullcalendar/interaction';
+import { Card, Select, Space, Tag } from 'antd';
+import { useRequest } from 'umi';
+
+const { Option } = Select;
+
+// Attendance status types
+const ATTENDANCE_STATUS = {
+  PRESENT: { color: 'green', text: '✓', label: 'Có mặt' },
+  LATE: { color: 'orange', text: '⚠', label: 'Đi muộn' },
+  ABSENT: { color: 'red', text: '✗', label: 'Vắng mặt' },
+  HALF_DAY: { color: 'blue', text: '½', label: 'Nửa ngày' },
+  LEAVE: { color: 'purple', text: 'L', label: 'Nghỉ phép' }
+};
+
+const DailyAttendance: React.FC = () => {
+  const [selectedEmployee, setSelectedEmployee] = useState<string>('');
+  const [attendanceData, setAttendanceData] = useState<any[]>([]);
+
+  // Fetch employees
+  const { data: employees } = useRequest('/api/employees');
+
+  // Fetch attendance data
+  const { data: attendance, loading } = useRequest(
+    `/api/attendance?employeeId=${selectedEmployee}`,
+    {
+      ready: !!selectedEmployee,
+      refreshDeps: [selectedEmployee]
+    }
+  );
+
+  // Custom event rendering
+  const renderEventContent = (eventInfo: any) => {
+    const status = ATTENDANCE_STATUS[eventInfo.event.extendedProps.status];
+    return (
+      <div style={{ padding: '2px 4px' }}>
+        <Tag color={status.color}>
+          {status.text} {status.label}
+        </Tag>
+      </div>
+    );
+  };
+
+  // Handle date click
+  const handleDateClick = (arg: any) => {
+    if (!selectedEmployee) return;
+
+    // Show modal or form to update attendance
+    updateAttendance(selectedEmployee, arg.dateStr);
+  };
+
+  // Update attendance status
+  const updateAttendance = async (employeeId: string, date: string) => {
+    try {
+      // Show status selection modal
+      const status = await showStatusSelectionModal();
+
+      // Update attendance
+      await fetch('/api/attendance', {
+        method: 'POST',
+        body: JSON.stringify({
+          employeeId,
+          date,
+          status
+        })
+      });
+
+      // Refresh data
+      refreshAttendanceData();
+    } catch (error) {
+      console.error('Error updating attendance:', error);
+    }
+  };
+
+  return (
+    <Card title="Chấm công theo ngày">
+      <Space direction="vertical" style={{ width: '100%' }}>
+        <Select
+          placeholder="Chọn nhân viên"
+          style={{ width: 200 }}
+          onChange={setSelectedEmployee}
+        >
+          {employees?.map((emp: any) => (
+            <Option key={emp.id} value={emp.id}>
+              {emp.name}
+            </Option>
+          ))}
+        </Select>
+
+        <FullCalendar
+          plugins={[dayGridPlugin, interactionPlugin]}
+          initialView="dayGridMonth"
+          headerToolbar={{
+            left: 'prev,next today',
+            center: 'title',
+            right: 'dayGridMonth,dayGridWeek'
+          }}
+          events={attendanceData}
+          eventContent={renderEventContent}
+          dateClick={handleDateClick}
+          height="auto"
+          loading={loading}
+        />
+      </Space>
+    </Card>
+  );
+};
+
+export default DailyAttendance;
+```
+
+### 2. Status Selection Modal
+```typescript
+// src/components/attendance/StatusSelectionModal.tsx
+import React from 'react';
+import { Modal, Radio, Space } from 'antd';
+
+const StatusSelectionModal: React.FC<{
+  visible: boolean;
+  onOk: (status: string) => void;
+  onCancel: () => void;
+}> = ({ visible, onOk, onCancel }) => {
+  const [selectedStatus, setSelectedStatus] = React.useState<string>('');
+
+  return (
+    <Modal
+      title="Chọn trạng thái"
+      visible={visible}
+      onOk={() => onOk(selectedStatus)}
+      onCancel={onCancel}
+    >
+      <Radio.Group onChange={(e) => setSelectedStatus(e.target.value)}>
+        <Space direction="vertical">
+          {Object.entries(ATTENDANCE_STATUS).map(([key, value]) => (
+            <Radio key={key} value={key}>
+              <Tag color={value.color}>
+                {value.text} {value.label}
+              </Tag>
+            </Radio>
+          ))}
+        </Space>
+      </Radio.Group>
+    </Modal>
+  );
+};
+```
+
+### 3. API Integration
+```typescript
+// src/services/attendance.ts
+import { request } from 'umi';
+
+export async function getAttendance(params: {
+  employeeId: string;
+  startDate: string;
+  endDate: string;
+}) {
+  return request('/api/attendance', {
+    method: 'GET',
+    params,
+  });
+}
+
+export async function updateAttendance(data: {
+  employeeId: string;
+  date: string;
+  status: string;
+}) {
+  return request('/api/attendance', {
+    method: 'POST',
+    data,
+  });
+}
+```
+
+## Features
+
+### 1. Visual Indicators
+- ✓ (Xanh) - Có mặt
+- ⚠ (Cam) - Đi muộn
+- ✗ (Đỏ) - Vắng mặt
+- ½ (Xanh dương) - Nửa ngày
+- L (Tím) - Nghỉ phép
+
+### 2. Interaction
+- Click vào ngày để cập nhật trạng thái
+- Chọn nhân viên để xem lịch sử
+- Chuyển đổi giữa chế độ xem tháng/tuần
+
+### 3. Data Management
+- Lưu trữ lịch sử chấm công
+- Tạo báo cáo
+- Xuất dữ liệu
+
+## Best Practices
+
+### 1. Performance
+- Sử dụng pagination cho dữ liệu lớn
+- Cache dữ liệu khi cần thiết
+- Tối ưu re-renders
+
+### 2. User Experience
+- Hiển thị loading states
+- Xác nhận trước khi cập nhật
+- Thông báo kết quả
+
+### 3. Error Handling
+- Xử lý lỗi API
+- Validate dữ liệu
+- Rollback khi cần
+
+## Usage Example
+```typescript
+// Trong file routes.ts
+{
+  path: '/admin/attendance',
+  component: './admin/employees/attendance/DailyAttendance',
+  name: 'Chấm công',
+  icon: 'calendar',
+}
+```

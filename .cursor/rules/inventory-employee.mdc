@@ -1,0 +1,104 @@
+---
+description:
+globs:
+alwaysApply: false
+---
+# Inventory and Employee Management Guide
+
+## Overview
+The system provides comprehensive management of restaurant inventory and employee operations, supporting multi-chain restaurant management.
+
+## Inventory Management
+
+### Features
+1. Stock Tracking
+   - Real-time inventory levels
+   - Low stock alerts
+   - Expiry date tracking
+   - Batch management
+
+2. Supplier Management
+   - Supplier database
+   - Order history
+   - Price tracking
+   - Delivery scheduling
+
+3. Cost Control
+   - Cost per item
+   - Waste tracking
+   - Usage analytics
+   - Profit margins
+
+### Components
+- `src/pages/admin/inventory/`
+  - `StockLevel.tsx` - Stock monitoring
+  - `SupplierManagement.tsx` - Supplier control
+  - `CostAnalysis.tsx` - Cost tracking
+  - `Reports.tsx` - Inventory reports
+
+## Employee Management
+
+### Features
+1. Time Tracking
+   - Clock in/out
+   - Break management
+   - Overtime tracking
+   - Attendance reports
+
+2. Shift Management
+   - Schedule creation
+   - Shift assignment
+   - Availability tracking
+   - Leave management
+
+3. Performance Tracking
+   - Work hours
+   - Productivity metrics
+   - Customer feedback
+   - Training records
+
+### Components
+- `src/pages/admin/employees/`
+  - `TimeTracking.tsx` - Attendance system
+  - `ShiftScheduler.tsx` - Schedule management
+  - `Performance.tsx` - Performance tracking
+  - `Payroll.tsx` - Payroll integration
+
+## Integration Points
+
+### Inventory System
+- Menu management
+- Recipe costing
+- Purchase orders
+- Stock alerts
+
+### Employee System
+- Payroll system
+- Training modules
+- Performance reviews
+- Compliance tracking
+
+## Reporting
+
+### Inventory Reports
+- Stock levels
+- Usage patterns
+- Cost analysis
+- Supplier performance
+
+### Employee Reports
+- Attendance records
+- Work hours
+- Performance metrics
+- Training completion
+
+## Best Practices
+1. Regular inventory audits
+2. Automated reordering
+3. Employee training
+4. Performance reviews
+5. Data backup
+6. Security protocols
+7. Compliance monitoring
+8. Regular system updates
+

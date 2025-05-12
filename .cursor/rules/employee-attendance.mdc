@@ -1,0 +1,154 @@
+---
+description:
+globs:
+alwaysApply: false
+---
+# Employee Attendance System Guide
+
+## Overview
+The employee attendance system uses FullCalendar to manage and display employee work schedules, time tracking, and attendance records.
+
+## Features
+
+### Calendar Display
+1. Multiple Views
+   - Monthly view
+   - Weekly view
+   - Daily view
+   - List view
+
+2. Event Types
+   - Regular shifts
+   - Overtime
+   - Leave
+   - Training sessions
+   - Special events
+
+### Time Tracking
+1. Clock In/Out
+   - Real-time tracking
+   - Location verification
+   - Break management
+   - Overtime calculation
+
+2. Schedule Management
+   - Shift creation
+   - Schedule assignment
+   - Availability marking
+   - Leave requests
+
+## Technical Implementation
+
+### Components
+- `src/pages/admin/employees/attendance/`
+  - `CalendarView.tsx` - Main calendar component
+  - `ShiftManagement.tsx` - Shift creation/editing
+  - `TimeTracking.tsx` - Clock in/out system
+  - `Reports.tsx` - Attendance reports
+
+### FullCalendar Integration
+```typescript
+// Example Calendar Component
+import FullCalendar from '@fullcalendar/react';
+import dayGridPlugin from '@fullcalendar/daygrid';
+import timeGridPlugin from '@fullcalendar/timegrid';
+import interactionPlugin from '@fullcalendar/interaction';
+
+const AttendanceCalendar = () => {
+  return (
+    <FullCalendar
+      plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
+      initialView="timeGridWeek"
+      headerToolbar={{
+        left: 'prev,next today',
+        center: 'title',
+        right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
+      }}
+      events={[
+        // Event data
+      ]}
+      editable={true}
+      selectable={true}
+      selectMirror={true}
+      dayMaxEvents={true}
+    />
+  );
+};
+```
+
+## Data Structure
+
+### Event Types
+```typescript
+interface ShiftEvent {
+  id: string;
+  title: string;
+  start: Date;
+  end: Date;
+  employeeId: string;
+  type: 'regular' | 'overtime' | 'leave' | 'training';
+  status: 'scheduled' | 'completed' | 'absent' | 'late';
+  notes?: string;
+}
+```
+
+### API Endpoints
+- `GET /api/shifts` - Get all shifts
+- `POST /api/shifts` - Create new shift
+- `PUT /api/shifts/:id` - Update shift
+- `DELETE /api/shifts/:id` - Delete shift
+- `POST /api/attendance/clock-in` - Clock in
+- `POST /api/attendance/clock-out` - Clock out
+
+## Features Implementation
+
+### 1. Shift Management
+- Drag and drop shifts
+- Resize shift duration
+- Copy shifts
+- Bulk shift creation
+
+### 2. Attendance Tracking
+- Real-time clock in/out
+- Break time tracking
+- Overtime calculation
+- Late arrival tracking
+
+### 3. Reporting
+- Daily attendance reports
+- Monthly summaries
+- Overtime reports
+- Leave balance
+
+## Best Practices
+
+### Calendar Configuration
+1. Use appropriate view based on needs
+2. Implement proper event handling
+3. Add loading states
+4. Handle timezone differences
+
+### Data Management
+1. Implement proper validation
+2. Handle concurrent updates
+3. Maintain data consistency
+4. Regular backups
+
+### User Experience
+1. Responsive design
+2. Clear visual indicators
+3. Easy navigation
+4. Quick actions
+
+## Security Considerations
+1. Role-based access control
+2. Data encryption
+3. Audit logging
+4. Input validation
+
+## Integration Points
+1. Payroll system
+2. Leave management
+3. Performance tracking
+4. Notification system
+

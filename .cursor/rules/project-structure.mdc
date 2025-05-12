@@ -1,0 +1,65 @@
+---
+description:
+globs:
+alwaysApply: false
+---
+# Project Structure Guide
+
+## Overview
+This is a UmiJS-based project that combines both admin and landing pages. The project follows a modular structure with clear separation between admin and landing features.
+
+## Directory Structure
+
+### Core Directories
+- `src/pages/` - Contains all page components
+  - `admin/` - Admin pages
+  - `landing/` - Landing pages
+- `src/components/` - Reusable components
+  - `common/` - Basic UI components
+  - `layout/` - Layout components
+  - `shared/` - Shared components between admin and landing
+- `src/services/` - API services
+- `src/models/` - Dva models for state management
+- `src/utils/` - Utility functions
+- `src/types/` - TypeScript type definitions
+- `src/config/` - UmiJS configuration
+
+## Key Files
+- `src/config/config.ts` - Main UmiJS configuration
+- `src/utils/request.ts` - API request configuration
+- `src/models/` - State management models
+
+## Conventions
+
+### Page Structure
+- Each page should be in its own directory under `pages/`
+- Main page component should be named `index.tsx`
+- Layout components should be named `_layout.tsx`
+
+### Component Structure
+- Components should be organized by feature/domain
+- Shared components should be in `components/shared/`
+- Layout components should be in `components/layout/`
+
+### API Calls
+- Use `useRequest` hook from UmiJS for data fetching
+- API services should be in `services/` directory
+- Use `request` utility from UmiJS for HTTP requests
+
+### State Management
+- Use Dva models for complex state management
+- Use React hooks for simple state
+- Models should be in `models/` directory
+
+### TypeScript
+- Define types in `types/` directory
+- Use TypeScript for all new code
+- Export types from `types/index.d.ts`
+
+## Best Practices
+1. Follow UmiJS conventions for routing and data fetching
+2. Keep components small and focused
+3. Use TypeScript for type safety
+4. Organize code by feature/domain
+5. Maintain clear separation between admin and landing code
+
