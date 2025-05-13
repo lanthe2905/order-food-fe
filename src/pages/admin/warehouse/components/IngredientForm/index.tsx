@@ -1,66 +1,51 @@
 import React, { useEffect } from 'react';
-import { Modal, Form, Input, InputNumber, Select, DatePicker } from 'antd';
-import { useRequest } from 'umi';
+import { Modal, Form, Input, InputNumber, Select, message } from 'antd';
 import type { Ingredient } from '@/models/warehouse.model';
-import { createIngredient, updateIngredient } from '@/services/warehouse.service';
+import type { Warehouse } from '@/mock/warehouse';
 
 interface IngredientFormProps {
   visible: boolean;
   onVisibleChange: (visible: boolean) => void;
-  currentIngredient: Ingredient | null;
+  ingredient: Ingredient | null;
+  warehouse: Warehouse | null;
   onSuccess: () => void;
 }
 
 const IngredientForm: React.FC<IngredientFormProps> = ({
   visible,
   onVisibleChange,
-  currentIngredient,
+  ingredient,
+  warehouse,
   onSuccess,
 }) => {
   const [form] = Form.useForm();
 
-  const { run: handleSubmit, loading } = useRequest(
-    currentIngredient ? updateIngredient : createIngredient,
-    {
-      manual: true,
-      onSuccess: () => {
-        message.success(
-          currentIngredient ? 'Cập nhật nguyên liệu thành công' : 'Thêm nguyên liệu thành công',
-        );
-        onSuccess();
-      },
-    },
-  );
-
   useEffect(() => {
-    if (visible && currentIngredient) {
-      form.setFieldsValue(currentIngredient);
+    if (visible && ingredient) {
+      form.setFieldsValue(ingredient);
     } else {
       form.resetFields();
     }
-  }, [visible, currentIngredient]);
+  }, [visible, ingredient, form]);
 
-  const handleOk = async () => {
+  const handleSubmit = async () => {
     try {
       const values = await form.validateFields();
-      if (currentIngredient) {
-        await handleSubmit(currentIngredient.id, values);
-      } else {
-        await handleSubmit(values);
-      }
+      console.log('Form values:', values);
+      message.success('Lưu nguyên liệu thành công');
+      onSuccess();
     } catch (error) {
-      // Form validation failed
+      console.error('Form validation failed:', error);
     }
   };
 
   return (
     <Modal
-      title={currentIngredient ? 'Sửa nguyên liệu' : 'Thêm nguyên liệu mới'}
-      visible={visible}
-      onOk={handleOk}
+      title={ingredient ? 'Sửa nguyên liệu' : 'Thêm nguyên liệu mới'}
+      open={visible}
       onCancel={() => onVisibleChange(false)}
-      confirmLoading={loading}
-      width={600}
+      onOk={handleSubmit}
+      destroyOnClose
     >
       <Form
         form={form}
@@ -89,9 +74,9 @@ const IngredientForm: React.FC<IngredientFormProps> = ({
           rules={[{ required: true, message: 'Vui lòng chọn danh mục' }]}
         >
           <Select>
-            <Select.Option value="vegetables">Rau củ</Select.Option>
             <Select.Option value="meat">Thịt</Select.Option>
             <Select.Option value="seafood">Hải sản</Select.Option>
+            <Select.Option value="vegetables">Rau củ</Select.Option>
             <Select.Option value="spices">Gia vị</Select.Option>
             <Select.Option value="other">Khác</Select.Option>
           </Select>
@@ -100,15 +85,9 @@ const IngredientForm: React.FC<IngredientFormProps> = ({
         <Form.Item
           name="unit"
           label="Đơn vị"
-          rules={[{ required: true, message: 'Vui lòng chọn đơn vị' }]}
+          rules={[{ required: true, message: 'Vui lòng nhập đơn vị' }]}
         >
-          <Select>
-            <Select.Option value="kg">Kilogram (kg)</Select.Option>
-            <Select.Option value="g">Gram (g)</Select.Option>
-            <Select.Option value="l">Lít (l)</Select.Option>
-            <Select.Option value="ml">Milliliter (ml)</Select.Option>
-            <Select.Option value="pcs">Cái (pcs)</Select.Option>
-          </Select>
+          <Input />
         </Form.Item>
 
         <Form.Item
@@ -142,8 +121,8 @@ const IngredientForm: React.FC<IngredientFormProps> = ({
         >
           <InputNumber
             min={0}
-            formatter={(value) => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
-            parser={(value) => value!.replace(/\$\s?|(,*)/g, '')}
+            formatter={(value) => `₫ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+            parser={(value) => Number(value!.replace(/₫\s?|(,*)/g, ''))}
             style={{ width: '100%' }}
           />
         </Form.Item>
@@ -151,22 +130,17 @@ const IngredientForm: React.FC<IngredientFormProps> = ({
         <Form.Item
           name="supplier"
           label="Nhà cung cấp"
+          rules={[{ required: true, message: 'Vui lòng nhập nhà cung cấp' }]}
         >
           <Input />
         </Form.Item>
 
         <Form.Item
           name="location"
-          label="Vị trí trong kho"
+          label="Vị trí"
+          rules={[{ required: true, message: 'Vui lòng nhập vị trí' }]}
         >
           <Input />
-        </Form.Item>
-
-        <Form.Item
-          name="expiryDate"
-          label="Hạn sử dụng"
-        >
-          <DatePicker style={{ width: '100%' }} />
         </Form.Item>
 
         <Form.Item
@@ -178,13 +152,6 @@ const IngredientForm: React.FC<IngredientFormProps> = ({
             <Select.Option value="active">Hoạt động</Select.Option>
             <Select.Option value="inactive">Không hoạt động</Select.Option>
           </Select>
-        </Form.Item>
-
-        <Form.Item
-          name="description"
-          label="Mô tả"
-        >
-          <Input.TextArea rows={4} />
         </Form.Item>
       </Form>
     </Modal>
