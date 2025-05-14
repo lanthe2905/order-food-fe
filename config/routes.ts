@@ -78,25 +78,25 @@ export default [
     icon: 'user',
     routes: [
       {
-        path: "list",
+        path: 'list',
         name: 'list',
         component: '@/pages/admin/employee/List.tsx',
       },
       {
-        path: "salary-info",
+        path: 'salary-info',
         name: 'salary-info',
         component: '@/pages/admin/salary-info/index.tsx',
       },
       {
-        path: "workshift",
+        path: 'workshift',
         name: 'workshift',
         component: '@/pages/admin/employee/List.tsx',
       },
       {
-        path: "workshift-process",
+        path: 'workshift-process',
         name: 'workshift-process',
         component: '@/pages/admin/workshift-process/index.tsx',
-      }
+      },
     ],
   },
   {
@@ -104,6 +104,12 @@ export default [
     name: 'warehouse',
     icon: 'inbox',
     component: '@/pages/admin/warehouse/index.tsx',
+  },
+  {
+    path: '/disher',
+    name: 'disher',
+    icon: 'shopping',
+    component: '@/pages/admin/disher/index.tsx',
   },
   {
     path: '/ingredients',
