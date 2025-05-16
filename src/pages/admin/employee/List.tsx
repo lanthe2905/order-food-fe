@@ -1,8 +1,7 @@
-import ProTable from '@/components/Table';
 import UIBtnDelete from '@/components/ui/Button/BtnDelete';
 import { handleApiError } from '@/utils/handleError';
 import { SplitCellsOutlined } from '@ant-design/icons';
-import { ActionType, ProColumnType } from '@ant-design/pro-components';
+import { ActionType, ProColumnType, ProTable } from '@ant-design/pro-components';
 import { Flex, message } from 'antd';
 import Create from './Create';
 import { deleteEmployee, getEmployeeList } from './service';
@@ -14,6 +13,7 @@ import { useRef } from 'react';
 const ListEmployee = () => {
   const { styles } = useStyle();
   const actionRef = useRef<ActionType>()
+  const reloadTable = () => actionRef.current?.reload()
   const columns: ProColumnType<Employee>[] = [
     {
       title: 'Họ và tên',
@@ -112,7 +112,6 @@ const ListEmployee = () => {
     },
   ];
 
-  const reloadTable = () => actionRef.current?.reload()
 
   return (
     <ProTable<Employee>
