@@ -10,7 +10,8 @@ const Settings: ProLayoutProps & {
   navTheme: 'light',
   // 拂晓蓝
   colorPrimary: '#F5222D',
-  layout: 'top',
+  layout: 'mix',
+  splitMenus: false,
   contentWidth: 'Fluid',
   fixedHeader: false,
   fixSiderbar: true,
