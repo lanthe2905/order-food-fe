@@ -1,5 +1,5 @@
 import { ProTable } from '@/components/ui/table';
-import { ProColumnType, ProFormDatePicker } from '@ant-design/pro-components';
+import { PageContainer, ProColumnType, ProFormDatePicker } from '@ant-design/pro-components';
 
 const SalaryInfo = () => {
   const columns: ProColumnType<any>[] = [
@@ -33,25 +33,28 @@ const SalaryInfo = () => {
       dataIndex: '1',
     },
     {
-      title: "Thưởng",
+      title: 'Thưởng',
       dataIndex: '2',
     },
     {
-      title: "Bảo hiểm",
+      title: 'Bảo hiểm',
       dataIndex: '3',
     },
     {
       title: 'Trợ cấp',
       dataIndex: '3',
-
     },
     {
-      title: "Khấu trừ",
+      title: 'Khấu trừ',
       dataIndex: '4',
-    }
+    },
   ];
 
-  return <ProTable columns={columns} />;
+  return (
+    <PageContainer>
+      <ProTable columns={columns} />
+    </PageContainer>
+  );
 };
 
 export default SalaryInfo;

@@ -56,4 +56,5 @@ export default {
   'menu.employee.salary-info': 'Thông tin tính lương',
   'menu.employee.workshift': "Ca làm việc",
   'menu.employee.workshift-process': "Quá trình làm việc",
+  'menu.dishes': 'Quản lý món ăn',
 };
