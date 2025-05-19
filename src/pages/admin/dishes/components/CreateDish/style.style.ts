@@ -34,6 +34,23 @@ const useStyle = createStyles(({ token }) => ({
       backgroundColor: 'rgba(220,220,220,0.1)',
     },
   },
+  previewImage: {
+    width: '100%',
+    height: '100%',
+    objectFit: 'cover',
+  },
+  mask: {
+    '& button': {
+      fontSize: 20,
+      background: 'none',
+      border: 'none',
+      cursor: 'pointer',
+      color: 'white',
+      '&:hover': {
+        color: `color-mix(in srgb, ${token.colorPrimary} 51%, #000000 0%)`, // Pha thêm 10% màu đen
+      },
+    },
+  },
 }));
 
 export default useStyle;

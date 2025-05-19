@@ -1,4 +1,6 @@
-import { useEffect, useState } from 'react';
+import { DeleteOutlined, EyeOutlined } from '@ant-design/icons';
+import { Image, Input, InputRef } from 'antd';
+import { useRef, useState } from 'react';
 import useStyle from './style.style';
 
 interface PriceInputProps {
@@ -9,19 +11,27 @@ interface PriceInputProps {
 
 const UploadImage = (props: PriceInputProps) => {
   const { id, value = {}, onChange } = props;
-
+  const fileInputRef = useRef<InputRef>(null);
   const [fileList, setFileList] = useState();
+
   const { styles } = useStyle();
 
-  useEffect(() => {
-    if (value) {
-      // setFileList(value);
-    }
-  }, [value]);
+  const handleChange = (e: any) => {
+    setFileList(fileInputRef.current?.input?.files);
+  };
 
   return (
     <>
-      <div className={styles.uploadImage} id={id}>
+      <div
+        className={styles.uploadImage}
+        id={'upload-image-container'}
+        onClick={(e) => {
+          e.stopPropagation();
+          if (e.target === document.getElementById('upload-image-container')) {
+            fileInputRef.current?.input?.click();
+          }
+        }}
+      >
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="24"
@@ -29,9 +39,6 @@ const UploadImage = (props: PriceInputProps) => {
           viewBox="0 0 24 24"
           fill="none"
           stroke="currentColor"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
           className="lucide lucide-camera mx-auto h-12 w-12 text-gray-400"
           data-lov-id="src/components/recipe/ImageUpload.tsx:14:10"
           data-lov-name="Camera"
@@ -43,7 +50,35 @@ const UploadImage = (props: PriceInputProps) => {
           <circle cx="12" cy="13" r="3"></circle>
         </svg>
         <p>Nhấn để tải lên hình ảnh món ăn</p>
-        <input type="file" style={{ display: 'none' }} onChange={onChange} value={fileList} />
+
+        {fileList?.length > 0 ? (
+          <Image
+            preview={{
+              mask: (
+                <div className={styles.mask}>
+                  <button
+                    type="button"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                    }}
+                  >
+                    <DeleteOutlined />
+                  </button>
+
+                  <button type="button" onClick={(e) => {}}>
+                    <EyeOutlined />
+                  </button>
+                </div>
+              ),
+            }}
+            height={'100%'}
+            width={'100%'}
+            id="preview-image"
+            className={styles.previewImage}
+            src={URL?.createObjectURL(fileList[0])}
+          />
+        ) : null}
+        <Input ref={fileInputRef} id="upload-image" type="file" style={{ display: 'none' }} onChange={handleChange} />
       </div>
     </>
   );

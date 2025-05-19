@@ -57,4 +57,6 @@ export default {
   'menu.employee.workshift': "Ca làm việc",
   'menu.employee.workshift-process': "Quá trình làm việc",
   'menu.dishes': 'Quản lý món ăn',
+  'menu.warehouse': 'Quản lý kho',
+  'menu.ingredients': 'Danh sách nguyên liệu',
 };

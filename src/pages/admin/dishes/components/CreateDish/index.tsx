@@ -42,7 +42,7 @@ const CreateDish: React.FC = () => {
             <Col md={12} sm={24} xs={24}>
               <ProFormText name="name" label="Tên Món Ăn" rules={[{ required: true, message: 'Please input the dish name!' }]} />
 
-              <ProFormDigit name="price" label="Giá" rules={[{ required: true, message: 'Please input the price!' }]} min={0} />
+              <ProFormDigit name="price" label="Giá món ăn" rules={[{ required: true, message: 'Vui lòng nhập giá món ăn!' }]} min={0} />
 
               <ProFormSelect
                 name="status"
