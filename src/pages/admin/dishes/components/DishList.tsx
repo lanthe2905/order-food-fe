@@ -2,7 +2,7 @@ import { fetchDishes } from '@/services/dishes.service';
 import { ROUTES } from '@/utils/routes';
 import { DeleteOutlined, EditOutlined, EyeOutlined, PlusOutlined } from '@ant-design/icons';
 import { ProCard, ProFormText, QueryFilter } from '@ant-design/pro-components';
-import { Avatar, Button, Card, List } from 'antd';
+import { Avatar, Button, Card, List, Tag } from 'antd';
 import React from 'react';
 import { history, useRequest } from 'umi';
 
@@ -48,6 +48,14 @@ const DishList = ({}: any) => {
       </QueryFilter>
 
       <ProCard
+        title={
+          <>
+            <Tag color="blue">Tất cả (70)</Tag>
+            <Tag color="green">Ăn Nhẹ (40)</Tag>
+            <Tag color="red">Mỳ Cay (20)</Tag>
+            <Tag color="purple">Nước Giải Khát (10)</Tag>
+          </>
+        }
         extra={
           <Button
             type="primary"

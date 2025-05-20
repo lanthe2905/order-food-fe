@@ -2,15 +2,18 @@ import { AvatarDropdown, AvatarName, Footer, Question, SelectLang } from '@/comp
 import { LinkOutlined } from '@ant-design/icons';
 import type { Settings as LayoutSettings } from '@ant-design/pro-components';
 import { SettingDrawer } from '@ant-design/pro-components';
-import TableToExcel from '@linways/table-to-excel';
 import type { RequestConfig, RunTimeLayoutConfig } from '@umijs/max';
 import { history, Link } from '@umijs/max';
+import React from 'react';
+
+import TableToExcel from '@linways/table-to-excel';
+import { fetchCurrentUser } from './services/ant-design-pro/api';
+
 import defaultSettings from '../config/defaultSettings';
+import { AppProvider } from './components/AppProvider';
 import ErrorBoundary from './components/ErrorBoundary';
 import DishesIcon from './components/Icons/Dishes';
 import { errorConfig } from './requestErrorConfig';
-import { fetchCurrentUser } from './services/ant-design-pro/api';
-
 const isDev = process.env.NODE_ENV === 'development';
 const loginPath = '/user/login';
 
@@ -154,6 +157,10 @@ export const layout: RunTimeLayoutConfig = ({ initialState, setInitialState }) =
     ...initialState?.settings,
   };
 };
+
+export function rootContainer(container: any, args: any) {
+  return React.createElement(AppProvider, null, container);
+}
 
 /**
  * @name request 配置，可以配置错误处理

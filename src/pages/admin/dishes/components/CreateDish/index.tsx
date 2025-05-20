@@ -2,13 +2,23 @@
 import { Dish } from '@/models/dishes.model';
 import { ROUTES } from '@/utils/routes';
 import { ArrowLeftOutlined } from '@ant-design/icons';
-import { PageContainer, ProCard, ProForm, ProFormDigit, ProFormSelect, ProFormText, ProFormTextArea } from '@ant-design/pro-components';
+import {
+  FooterToolbar,
+  PageContainer,
+  ProCard,
+  ProForm,
+  ProFormDigit,
+  ProFormList,
+  ProFormSelect,
+  ProFormText,
+  ProFormTextArea,
+} from '@ant-design/pro-components';
 import { history } from '@umijs/max';
-import { Button, Col, Form, message, Row } from 'antd';
+import { Button, Card, Col, Form, message, Row, Typography } from 'antd';
 import React from 'react';
+import UploadImage from './components/Upload';
 import Icons from './icons';
 import useStyle from './style.style';
-import UploadImage from './Upload';
 
 const CreateDish: React.FC = () => {
   const { styles } = useStyle();
@@ -37,7 +47,16 @@ const CreateDish: React.FC = () => {
       }}
     >
       <ProCard>
-        <ProForm onFinish={onFinish} layout="vertical" initialValues={{ status: 'available' }}>
+        <ProForm
+          onFinish={onFinish}
+          layout="vertical"
+          initialValues={{ status: 'available' }}
+          submitter={{
+            render(props, dom) {
+              return <FooterToolbar>{dom}</FooterToolbar>;
+            },
+          }}
+        >
           <Row gutter={[16, 16]}>
             <Col md={12} sm={24} xs={24}>
               <ProFormText name="name" label="Tên Món Ăn" rules={[{ required: true, message: 'Please input the dish name!' }]} />
@@ -63,6 +82,99 @@ const CreateDish: React.FC = () => {
             </Col>
           </Row>
 
+          <Card title={'NGUYÊN LIỆU'}>
+            <ProFormList
+              name="users"
+              initialValue={[
+                {
+                  useMode: 'chapter',
+                },
+              ]}
+              creatorButtonProps={{
+                position: 'top',
+                creatorButtonText: 'Nguyên Liệu',
+              }}
+              creatorRecord={{
+                useMode: 'none',
+              }}
+              containerStyle={{
+                width: '100%',
+              }}
+            >
+              <Row gutter={[16, 16]}>
+                <Col md={12} sm={12} xs={24}>
+                  <ProFormSelect
+                    options={[
+                      {
+                        value: 'chapter',
+                        label: 'Valid after stamping',
+                      },
+                      {
+                        value: 'none',
+                        label: 'Not effective',
+                      },
+                    ]}
+                    name="useMode"
+                    label="Contract agreement effective method"
+                  />
+                </Col>
+
+                <Col md={6} sm={12} xs={24}>
+                  <ProFormText name={'abc'} placeholder={'Số Lượng'} />
+                </Col>
+
+                <Col md={6} sm={12} xs={24}>
+                  <Typography>G</Typography>
+                </Col>
+              </Row>
+            </ProFormList>
+          </Card>
+
+          <Card title={'Toppings'} className="mt-1 mb-1">
+            <ProFormList
+              name="users"
+              initialValue={[
+                {
+                  useMode: 'chapter',
+                },
+              ]}
+              creatorButtonProps={{
+                position: 'top',
+                creatorButtonText: 'Nguyên Liệu',
+              }}
+              creatorRecord={{
+                useMode: 'none',
+              }}
+              containerStyle={{
+                width: '100%',
+              }}
+            >
+              <Row gutter={[16, 16]}>
+                <Col span={8}>
+                  <ProFormSelect
+                    options={[
+                      {
+                        value: 'chapter',
+                        label: 'Valid after stamping',
+                      },
+                      {
+                        value: 'none',
+                        label: 'Not effective',
+                      },
+                    ]}
+                    name="useMode"
+                    label="Contract agreement effective method"
+                  />
+                </Col>
+
+                <Col span={8}>
+                  <ProFormText name={'abc'} label={'Số Lượng'} />
+                </Col>
+              </Row>
+            </ProFormList>
+          </Card>
+
+          <ProFormSelect label={'Nhóm món ăn'} name={'group_id'} options={[]} />
           <ProFormTextArea name="description" label="Mô Tả" />
           <ProFormTextArea name="description" label="Cách làm" />
         </ProForm>

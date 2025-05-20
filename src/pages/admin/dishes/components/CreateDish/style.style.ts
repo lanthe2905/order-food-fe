@@ -13,7 +13,6 @@ const useStyle = createStyles(({ token }) => ({
   uploadImage: {
     width: '100%',
     height: '200px',
-    // backgroundColor: 'red',
     border: '1px solid',
     borderStyle: 'dashed',
     borderWidth: 2,
@@ -26,6 +25,10 @@ const useStyle = createStyles(({ token }) => ({
     justifyContent: 'center',
     justifyItems: 'center',
     cursor: 'pointer',
+    '& svg': {
+      fontWeight: 800,
+      width: '48px',
+    },
     '&:hover': {
       color: token.colorPrimary,
       lineHeight: 1,
@@ -40,6 +43,7 @@ const useStyle = createStyles(({ token }) => ({
     objectFit: 'cover',
   },
   mask: {
+    // Icon button trong lớp mask
     '& button': {
       fontSize: 20,
       background: 'none',
@@ -47,7 +51,7 @@ const useStyle = createStyles(({ token }) => ({
       cursor: 'pointer',
       color: 'white',
       '&:hover': {
-        color: `color-mix(in srgb, ${token.colorPrimary} 51%, #000000 0%)`, // Pha thêm 10% màu đen
+        color: `color-mix(in srgb, ${token.colorPrimary} 60%, white 30%)`,
       },
     },
   },
