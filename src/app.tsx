@@ -4,12 +4,16 @@ import type { Settings as LayoutSettings } from '@ant-design/pro-components';
 import { SettingDrawer } from '@ant-design/pro-components';
 import type { RequestConfig, RunTimeLayoutConfig } from '@umijs/max';
 import { history, Link } from '@umijs/max';
-import defaultSettings from '../config/defaultSettings';
-import { errorConfig } from './requestErrorConfig';
-import { fetchCurrentUser } from './services/ant-design-pro/api';
-import TableToExcel from '@linways/table-to-excel'
-import ErrorBoundary from './components/ErrorBoundary';
+import React from 'react';
 
+import TableToExcel from '@linways/table-to-excel';
+import { fetchCurrentUser } from './services/ant-design-pro/api';
+
+import defaultSettings from '../config/defaultSettings';
+import { AppProvider } from './components/AppProvider';
+import ErrorBoundary from './components/ErrorBoundary';
+import DishesIcon from './components/Icons/Dishes';
+import { errorConfig } from './requestErrorConfig';
 const isDev = process.env.NODE_ENV === 'development';
 const loginPath = '/user/login';
 
@@ -20,13 +24,12 @@ TableToExcel.convertToExcel = async (table) => {
     sheet: {
       name: 'Sheet 1',
     },
-  }
-  let wb = TableToExcel.tableToBook(table, defaultOpts)
+  };
+  let wb = TableToExcel.tableToBook(table, defaultOpts);
 
-  const buffer = await wb.xlsx.writeBuffer()
-  return new Blob([buffer], { type: 'application/octet-stream' })
-}
-
+  const buffer = await wb.xlsx.writeBuffer();
+  return new Blob([buffer], { type: 'application/octet-stream' });
+};
 
 /**
  * @see  https://umijs.org/zh-CN/plugins/plugin-initial-state
@@ -115,7 +118,18 @@ export const layout: RunTimeLayoutConfig = ({ initialState, setInitialState }) =
           </Link>,
         ]
       : [],
-    menuHeaderRender: undefined,
+    menuDataRender: (menuData) => {
+      /**
+       * Nếu tháng đó chưa được khởi tạo nhân sự thì disabled menu lương
+       */
+      menuData.forEach((menu) => {
+        if (menu.path == '/admin/dishes') {
+          menu.icon = <DishesIcon />;
+        }
+      });
+
+      return menuData;
+    },
     // 自定义 403 页面
     // unAccessible: <div>unAccessible</div>,
     // 增加一个 loading 的状态
@@ -143,6 +157,10 @@ export const layout: RunTimeLayoutConfig = ({ initialState, setInitialState }) =
     ...initialState?.settings,
   };
 };
+
+export function rootContainer(container: any, args: any) {
+  return React.createElement(AppProvider, null, container);
+}
 
 /**
  * @name request 配置，可以配置错误处理

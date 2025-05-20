@@ -1,45 +1,64 @@
 ---
-description:
-globs:
-alwaysApply: false
+description: 
+globs: 
+alwaysApply: true
 ---
 # Admin Section Guide
 
 ## Overview
+
 The admin section is built using UmiJS and Ant Design Pro components. It follows a modular structure with clear separation of concerns.
 
 ## Key Features
+
 - User Management
 - Workshift Processing
 - Dashboard
 - Reports
+- Dishes
 
 ## Directory Structure
+
 - `src/pages/admin/` - Admin pages
   - `dashboard/` - Dashboard components
   - `users/` - User management
   - `workshift-process/` - Workshift processing
   - `reports/` - Reporting features
+  - `dishes/` - Dishes features
 
 ## Components
+
 - Use Ant Design Pro components when possible
 - Custom components should be in `components/admin/`
 - Layout components in `components/layout/AdminLayout/`
 
+## Models
+
+- All types of resource APIs are needed inside @src/models/*.ts.
+  ├── model/
+  │ ├── *.model.ts
+- Use type in Typescript instead of interface to define model.
+
+- Etc: prom: help me create resouce dishes
+  create file dishes.ts
+  type Dishes = {}
+
 ## Data Management
+
 - Use Dva models for state management
 - API calls should be in `services/admin.ts`
 - Use `useRequest` hook for data fetching
 
 ## Authentication
+
 - Admin routes should be protected
 - Use `@umijs/plugin-access` for route access control
 - Authentication state in `models/auth.ts`
 
 ## Best Practices
+
 1. Use Ant Design Pro components
 2. Follow UmiJS conventions
 3. Implement proper error handling
 4. Use TypeScript for type safety
 5. Keep components modular and reusable
-
