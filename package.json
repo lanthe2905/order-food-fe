@@ -52,6 +52,7 @@
     "@fullcalendar/resource": "^6.1.17",
     "@fullcalendar/resource-timeline": "^6.1.17",
     "@linways/table-to-excel": "^1.0.4",
+    "@react-oauth/google": "^0.12.2",
     "@umijs/route-utils": "^2.2.2",
     "antd": "^5.25.1",
     "antd-style": "^3.6.1",

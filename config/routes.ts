@@ -15,11 +15,11 @@
 export default [
   {
     path: '/user',
-    layout: false,
+    layout:false,
+    component: '@/layouts/UserLayout.tsx',
     routes: [
       {
         path: '/user/login',
-        layout: false,
         name: 'login',
         component: './user/login',
       },

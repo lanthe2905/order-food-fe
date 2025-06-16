@@ -2,15 +2,9 @@ import { Footer } from '@/components';
 import { getFakeCaptcha } from '@/services/ant-design-pro/login';
 import { getToken, setToken } from '@/services/auth';
 import { handleApiError } from '@/utils/handleError';
-import {
-  AlipayCircleOutlined,
-  LockOutlined,
-  MobileOutlined,
-  TaobaoCircleOutlined,
-  UserOutlined,
-  WeiboCircleOutlined,
-} from '@ant-design/icons';
+import { GoogleOutlined, LockOutlined, MobileOutlined, UserOutlined } from '@ant-design/icons';
 import { LoginForm, ProFormCaptcha, ProFormText } from '@ant-design/pro-components';
+import { useGoogleLogin } from '@react-oauth/google';
 import { FormattedMessage, Helmet, SelectLang, useIntl, useModel } from '@umijs/max';
 import { Alert, message, Tabs } from 'antd';
 import { createStyles } from 'antd-style';
@@ -48,8 +42,7 @@ const useStyles = createStyles(({ token }) => {
       flexDirection: 'column',
       height: '100vh',
       overflow: 'auto',
-      backgroundImage:
-        "url('https://mdn.alipayobjects.com/yuyan_qk0oxh/afts/img/V-_oS6r-i7wAAAAAAAAAAAAAFl94AQBr')",
+      backgroundImage: "url('https://mdn.alipayobjects.com/yuyan_qk0oxh/afts/img/V-_oS6r-i7wAAAAAAAAAAAAAFl94AQBr')",
       backgroundSize: '100% 100%',
     },
   };
@@ -57,12 +50,19 @@ const useStyles = createStyles(({ token }) => {
 
 const ActionIcons = () => {
   const { styles } = useStyles();
+  const login = useGoogleLogin({
+    onSuccess: (tokenResponse) => console.log(tokenResponse),
+  });
 
   return (
     <>
-      <AlipayCircleOutlined key="AlipayCircleOutlined" className={styles.action} />
-      <TaobaoCircleOutlined key="TaobaoCircleOutlined" className={styles.action} />
-      <WeiboCircleOutlined key="WeiboCircleOutlined" className={styles.action} />
+      <GoogleOutlined
+        key="GoogleOutlined"
+        className={styles.action}
+        onClick={() => {
+          login();
+        }}
+      />
     </>
   );
 };
@@ -128,7 +128,7 @@ const Login: React.FC = () => {
         return;
       }
     } catch (error) {
-      handleApiError(error, null, null);
+      handleApiError(error, null);
     }
   };
   const { status, type: loginType } = userLoginState;
@@ -158,6 +158,7 @@ const Login: React.FC = () => {
           - {Settings.title}
         </title>
       </Helmet>
+
       <Lang />
       <div
         style={{
@@ -176,10 +177,7 @@ const Login: React.FC = () => {
           initialValues={{
             autoLogin: true,
           }}
-          actions={[
-            <FormattedMessage key="loginWith" id="pages.login.loginWith" />,
-            <ActionIcons key="icons" />,
-          ]}
+          actions={[<FormattedMessage key="loginWith" id="pages.login.loginWith" />, <ActionIcons key="icons" />]}
           onFinish={async (values) => {
             await handleSubmit(values as API.LoginParams);
           }}
@@ -221,12 +219,7 @@ const Login: React.FC = () => {
                 rules={[
                   {
                     required: true,
-                    message: (
-                      <FormattedMessage
-                        id="pages.login.username.required"
-                        defaultMessage="请输入用户名!"
-                      />
-                    ),
+                    message: <FormattedMessage id="pages.login.username.required" defaultMessage="请输入用户名!" />,
                   },
                 ]}
               />
@@ -243,12 +236,7 @@ const Login: React.FC = () => {
                 rules={[
                   {
                     required: true,
-                    message: (
-                      <FormattedMessage
-                        id="pages.login.password.required"
-                        defaultMessage="请输入密码！"
-                      />
-                    ),
+                    message: <FormattedMessage id="pages.login.password.required" defaultMessage="请输入密码！" />,
                   },
                 ]}
               />
@@ -271,21 +259,11 @@ const Login: React.FC = () => {
                 rules={[
                   {
                     required: true,
-                    message: (
-                      <FormattedMessage
-                        id="pages.login.phoneNumber.required"
-                        defaultMessage="请输入手机号！"
-                      />
-                    ),
+                    message: <FormattedMessage id="pages.login.phoneNumber.required" defaultMessage="请输入手机号！" />,
                   },
                   {
                     pattern: /^1\d{10}$/,
-                    message: (
-                      <FormattedMessage
-                        id="pages.login.phoneNumber.invalid"
-                        defaultMessage="手机号格式错误！"
-                      />
-                    ),
+                    message: <FormattedMessage id="pages.login.phoneNumber.invalid" defaultMessage="手机号格式错误！" />,
                   },
                 ]}
               />
@@ -317,12 +295,7 @@ const Login: React.FC = () => {
                 rules={[
                   {
                     required: true,
-                    message: (
-                      <FormattedMessage
-                        id="pages.login.captcha.required"
-                        defaultMessage="请输入验证码！"
-                      />
-                    ),
+                    message: <FormattedMessage id="pages.login.captcha.required" defaultMessage="请输入验证码！" />,
                   },
                 ]}
                 onGetCaptcha={async (phone) => {
